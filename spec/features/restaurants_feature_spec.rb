@@ -2,9 +2,9 @@ require 'rails_helper'
 
 feature 'restaurants' do
 
-  context 'no restaurants have been added' do
+  context 'when logged in' do
     scenario 'should display a prompt to add a restaurant' do
-      visit '/restaurants'
+      sign_up
       expect(page).to have_content 'No restaurants yet'
       expect(page).to have_link 'Add a restaurant'
     end
@@ -21,13 +21,7 @@ feature 'restaurants' do
 
   context 'creating restaurants' do
     scenario 'if logged in, prompts user to fill out a form, then displays the new restaurant' do
-      visit '/users/sign_up'
-      fill_in('Email', with: 'test@example.com')
-      fill_in('Password', with: 'testtest')
-      fill_in('Password confirmation', with: 'testtest')
-      click_button('Sign up')
-
-
+      sign_up
       click_link 'Add a restaurant'
       fill_in 'Name', with: 'KFC'
       click_button 'Create Restaurant'
@@ -41,8 +35,8 @@ feature 'restaurants' do
     end
 
     context 'an invalid restaurant' do
-      xit 'does not allow you to submit a name that is too short' do
-        visit '/restaurants'
+      it 'does not allow you to submit a name that is too short' do
+        sign_up
         click_link 'Add a restaurant'
         fill_in 'Name', with: 'kf'
         click_button 'Create Restaurant'
@@ -66,28 +60,52 @@ feature 'restaurants' do
   end
 
   context 'editing restaurants' do
-    before { Restaurant.create name: 'KFC' }
-    xscenario 'let a user edit a restaurant' do
-     visit '/restaurants'
-     click_link 'Edit KFC'
-     fill_in 'Name', with: 'Kentucky Fried Chicken'
-     click_button 'Update Restaurant'
-     expect(page).to have_content 'Kentucky Fried Chicken'
-     expect(current_path).to eq '/restaurants'
+    before do
+      sign_up
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'KFC'
+      click_button 'Create Restaurant'
+    end
+
+    scenario 'lets user edit their own restaurant' do
+      click_link 'Edit KFC'
+      fill_in 'Name', with: 'Kentucky Fried Chicken'
+      click_button 'Update Restaurant'
+      expect(page).to have_content 'Kentucky Fried Chicken'
+      expect(current_path).to eq '/restaurants'
+    end
+    scenario 'does not let user edit another restaurant' do
+      click_link 'Sign out'
+      sign_up_2
+      expect(page).not_to have_link 'Edit KFC'
     end
 
   end
 
   context 'deleting restaurants' do
     before { Restaurant.create name: 'KFC' }
-    xscenario 'let a user delete a restaurant' do
-     visit '/restaurants'
+    scenario 'let a user delete a restaurant' do
+     sign_up
      click_link 'Delete KFC'
      expect(page).not_to have_content 'KFC'
      expect(page).to have_content 'Restaurant deleted successfully'
     end
   end
 
+  def sign_up
+    visit '/users/sign_up'
+    fill_in('Email', with: 'test@example.com')
+    fill_in('Password', with: 'testtest')
+    fill_in('Password confirmation', with: 'testtest')
+    click_button('Sign up')
+  end
 
+  def sign_up_2
+    visit '/users/sign_up'
+    fill_in('Email', with: 'test2@example.com')
+    fill_in('Password', with: 'testtest')
+    fill_in('Password confirmation', with: 'testtest')
+    click_button('Sign up')
+  end
 
 end

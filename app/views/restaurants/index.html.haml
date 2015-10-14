@@ -25,6 +25,5 @@
   - if user_signed_in?
     = link_to "Add a restaurant", new_restaurant_path
   - else
-    %p Please sign in to add a restaurant.
-    = link_to "Sign in", new_user_session_path
-    = link_to "Sign up", new_user_registration_path
+    %p
+      Please sign in to add or edit restaurants
