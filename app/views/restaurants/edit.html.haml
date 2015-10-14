@@ -1,4 +1,8 @@
-= form_for @restaurant do |f|
-  = f.label :name
-  = f.text_field :name
-  = f.submit
+- if @authorisation
+  = form_for @restaurant do |f|
+    = f.label :name
+    = f.text_field :name
+    = f.submit
+
+- else
+  Cannot edit.
