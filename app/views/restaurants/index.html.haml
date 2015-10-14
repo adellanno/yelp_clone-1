@@ -15,7 +15,7 @@
           %li
             No reviews
     %p
-      - if restaurant.user_id == current_user.id
+      - if user_signed_in? && restaurant.user_id == current_user.id
         = link_to "Edit #{restaurant.name}", edit_restaurant_path(restaurant)
         = link_to "Delete #{restaurant.name}", restaurant_path(restaurant), method: :delete
 

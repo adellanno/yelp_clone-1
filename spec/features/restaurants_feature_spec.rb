@@ -74,7 +74,7 @@ feature 'restaurants' do
       expect(page).to have_content 'Kentucky Fried Chicken'
       expect(current_path).to eq '/restaurants'
     end
-    scenario 'does not let user edit another restaurant' do
+    scenario 'does not let user edit another user\'s restaurant' do
       click_link 'Sign out'
       sign_up_2
       expect(page).not_to have_link 'Edit KFC'
@@ -83,12 +83,21 @@ feature 'restaurants' do
   end
 
   context 'deleting restaurants' do
-    before { Restaurant.create name: 'KFC' }
-    scenario 'let a user delete a restaurant' do
-     sign_up
+    before do
+      sign_up
+      click_link 'Add a restaurant'
+      fill_in 'Name', with: 'KFC'
+      click_button 'Create Restaurant'
+    end
+    scenario 'lets a user delete their own restaurant' do
      click_link 'Delete KFC'
      expect(page).not_to have_content 'KFC'
      expect(page).to have_content 'Restaurant deleted successfully'
+    end
+    scenario 'does not let user delete another user\'s restaurant' do
+      click_link 'Sign out'
+      sign_up_2
+      expect(page).not_to have_link 'Delete KFC'
     end
   end
 
