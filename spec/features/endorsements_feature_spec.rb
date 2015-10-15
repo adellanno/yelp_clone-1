@@ -8,7 +8,7 @@ feature 'endorsing reviews' do
     leave_review('It was an abomination', 3)
   end
 
-  scenario 'users can endorse review, which updates endorsement count' do
+  it 'users can endorse review, which updates endorsement count', js: true do
     click_link 'Sign out'
     sign_up_2
     click_link 'Endorse review'
