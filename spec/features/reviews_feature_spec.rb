@@ -31,6 +31,23 @@ feature 'reviews' do
     expect(page).to have_link 'Review KFC'
   end
 
+  scenario 'user should be able to delete reviews' do
+    click_link 'Review KFC'
+    fill_in 'Thoughts', with: 'So So'
+    click_button 'Leave review'
+    expect(page).to have_link 'Delete KFC review'
+    click_link 'Delete KFC review'
+    expect(page).not_to have_content 'So So'
+  end
 
-
+  scenario 'user cannot delete reviews that they did not create' do
+    click_link 'Review KFC'
+    fill_in 'Thoughts', with: 'So So'
+    click_button 'Leave review'
+    expect(page).to have_link 'Delete KFC review'
+    click_link 'Sign out'
+    sign_up_2
+    expect(page).not_to have_link 'Delete KFC review'
+  end
+  
 end

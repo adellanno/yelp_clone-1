@@ -15,4 +15,11 @@ class ReviewsController < ApplicationController
     params.require(:review).permit(:thoughts, :rating)
   end
 
+  def destroy
+    @review = Review.find(params[:id])
+    @review.destroy
+    flash[:notice] = 'Review deleted successfully'
+    redirect_to '/'
+  end
+
 end

@@ -6,5 +6,6 @@ class Review < ActiveRecord::Base
   validates :restaurant_id, presence: true
   validates :user_id, presence: true
   validates :rating, inclusion: (1..5)
+  validates :user, uniqueness: { scope: :restaurant, message: "has reviewed this restaurant already" }
 
 end
