@@ -12,7 +12,7 @@ feature 'endorsing reviews' do
     click_link 'Sign out'
     sign_up_2
     click_link 'Endorse review'
-    expect(page).to have_content('1 endorsement')
+    expect(page).to have_content('1 endorsements')
   end
 
 end
