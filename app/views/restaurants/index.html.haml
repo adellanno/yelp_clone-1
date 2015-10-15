@@ -8,10 +8,14 @@
           - restaurant.reviews.each do |review|
             %li
               = review.thoughts
-              %strong= review.rating
-              \/5
+              %strong= review.rating.to_s + '/5'
               -if user_signed_in? && review.user_id == current_user.id
                 = link_to "Delete #{restaurant.name} review", restaurant_review_path(restaurant, review), method: :delete
+        %p
+          = "Average rating: "
+          <strong>
+          = "#{restaurant.average_rating}"
+          </strong>
       - else
         %ul
           %li
