@@ -44,9 +44,8 @@ feature 'reviews' do
     leave_review('So So', 3)
     click_link 'Sign out'
     sign_up_2
-    leave_review('Good', 4)
-    expect(page).to have_content 'Average rating: 3.5'
+    leave_review('Good', 5)
+    expect(page).to have_content('Average rating: ★★★★☆')
   end
-
 
 end

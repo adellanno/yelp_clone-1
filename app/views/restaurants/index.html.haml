@@ -14,7 +14,7 @@
         %p
           = "Average rating: "
           <strong>
-          = "#{restaurant.average_rating}"
+          = "#{star_rating(restaurant.average_rating)}"
           </strong>
       - else
         %ul
