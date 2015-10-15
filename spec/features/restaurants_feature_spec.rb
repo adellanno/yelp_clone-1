@@ -1,4 +1,5 @@
 require 'rails_helper'
+require_relative 'features_helper'
 
 feature 'restaurants' do
 
@@ -99,22 +100,6 @@ feature 'restaurants' do
       sign_up_2
       expect(page).not_to have_link 'Delete KFC'
     end
-  end
-
-  def sign_up
-    visit '/users/sign_up'
-    fill_in('Email', with: 'test@example.com')
-    fill_in('Password', with: 'testtest')
-    fill_in('Password confirmation', with: 'testtest')
-    click_button('Sign up')
-  end
-
-  def sign_up_2
-    visit '/users/sign_up'
-    fill_in('Email', with: 'test2@example.com')
-    fill_in('Password', with: 'testtest')
-    fill_in('Password confirmation', with: 'testtest')
-    click_button('Sign up')
   end
 
 end

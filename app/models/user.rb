@@ -21,5 +21,6 @@ class User < ActiveRecord::Base
   end
 
   has_many :restaurants
+  has_many :reviews
 
 end
